@@ -10,15 +10,28 @@ if(isset($_POST['simpan'])){
     $kondisi = $_POST['kondisi'];
     $ket = $_POST['keterangan'];
 
-    $gambar = $_FILES['gambar']['name'];
-    if($gambar){
-        move_uploaded_file($_FILES['gambar']['tmp_name'], "upload/".$gambar);
+    // Pastikan folder upload ada
+    $upload_dir = __DIR__ . '/upload/';
+    if(!file_exists($upload_dir)){
+        mkdir($upload_dir, 0777, true);
     }
 
-    mysqli_query($conn, "INSERT INTO aset VALUES(
-        NULL,'$nama','$kategori','$gedung','$ruangan',
-        '$gambar','$status','$kondisi','$ket',NOW()
-    )");
+    // Upload gambar
+    $gambar = '';
+    if(!empty($_FILES['gambar']['name'])){
+        $nama_file = time()."_".$_FILES['gambar']['name'];
+        $target_file = $upload_dir . $nama_file;
+        if(move_uploaded_file($_FILES['gambar']['tmp_name'], $target_file)){
+            $gambar = $nama_file;
+        }
+    }
+
+    // INSERT dengan nama kolom eksplisit
+    mysqli_query($conn, "INSERT INTO aset 
+        (nama_aset, kategori_id, gedung_id, ruangan_id, gambar, status, kondisi, keterangan, created_at)
+        VALUES
+        ('$nama','$kategori','$gedung','$ruangan','$gambar','$status','$kondisi','$ket',NOW())
+    ");
 
     header("Location: aset.php");
 }

@@ -1,7 +1,7 @@
 <div class="sidebar">
     <div class="sidebar-header">
         <h4>SARPRAS</h4>
-        <small>Kampus</small>
+        <small>Universitas Islam Mulia</small>
     </div>
 
     <ul class="sidebar-menu">
@@ -54,7 +54,7 @@
         <li class="menu-title">LAPORAN</li>
 
         <li>
-            <a href="#">
+            <a href="laporan_aset.php">
                 <i class="bi bi-file-earmark-text"></i>
                 <span>Laporan Aset</span>
             </a>
